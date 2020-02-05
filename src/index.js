@@ -8,10 +8,16 @@ const preactCliSvgLoader = (config, helpers) => {
     const rawLoader = helpers.getLoadersByName(config, 'raw-loader')
     rawLoader.map(entry => entry.rule.test = /\.(xml|html|txt|md)$/)
 
-    config.module.loaders.push({
+    const loader = {
         test: /\.svg$/,
         use: ['preact-svg-loader']
-    })
+    }
+
+    if(config.module.loaders){
+        config.module.loaders.push(loader)
+    } else {
+        config.module.rules.push(loader)
+    }
 }
 
 module.exports = preactCliSvgLoader
